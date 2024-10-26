@@ -1,0 +1,97 @@
+{
+	"survey": [
+		{
+			"title": "Diversity and Inclusion Feedback Survey",
+			"fields": [
+				{
+					"name": "overallPerception",
+					"label": "How would you rate the overall diversity and inclusion efforts at our organization?",
+					"type": "slider",
+					"required": true,
+					"min": 1,
+					"max": 10
+				},
+				{
+					"name": "inclusiveEnvironment",
+					"label": "Do you feel that the work environment is inclusive for all employees?",
+					"type": "multiple",
+					"required": true,
+					"options": [
+						"Strongly Agree",
+						"Agree",
+						"Neutral",
+						"Disagree",
+						"Strongly Disagree"
+					]
+				},
+				{
+					"name": "diversityAwareness",
+					"label": "How would you rate the organization's awareness and understanding of diversity issues?",
+					"type": "icon",
+					"required": true,
+					"icon": "faStar"
+				},
+				{
+					"name": "trainingEffectiveness",
+					"label": "How effective are the diversity and inclusion training programs?",
+					"type": "multiple",
+					"required": true,
+					"options": [
+						"Very Effective",
+						"Effective",
+						"Somewhat Effective",
+						"Not Effective",
+						"Not Applicable"
+					]
+				},
+				{
+					"name": "representation",
+					"label": "Do you feel there is adequate representation of diverse groups within the organization?",
+					"type": "checkbox",
+					"required": true
+				},
+				{
+					"name": "supportForDiverseGroups",
+					"label": "How well does the organization support diverse groups?",
+					"type": "slider",
+					"required": true,
+					"min": 1,
+					"max": 5
+				},
+				{
+					"name": "leadershipCommitment",
+					"label": "How committed do you feel the leadership is to diversity and inclusion?",
+					"type": "multiple",
+					"required": true,
+					"options": [
+						"Very Committed",
+						"Committed",
+						"Somewhat Committed",
+						"Not Committed"
+					]
+				},
+				{
+					"name": "barriersToInclusion",
+					"label": "What barriers to inclusion have you observed or experienced?",
+					"type": "text",
+					"required": false,
+					"multiline": true
+				},
+				{
+					"name": "improvementSuggestions",
+					"label": "Do you have any suggestions for improving diversity and inclusion in the workplace?",
+					"type": "text",
+					"required": false,
+					"multiline": true
+				},
+				{
+					"name": "additionalComments",
+					"label": "Any other comments or feedback you would like to share?",
+					"type": "text",
+					"required": false,
+					"multiline": true
+				}
+			]
+		}
+	]
+}
