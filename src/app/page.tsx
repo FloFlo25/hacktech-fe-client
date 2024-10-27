@@ -3,6 +3,7 @@
 import Image from "next/image";
 import { useState } from "react";
 import FormGenerator from "~/components/FormGenerator";
+import UserForm from "~/components/UserForm";
 import UserSelector from "~/components/UserSelector";
 import { type UserType } from "~/types/user";
 
@@ -22,7 +23,7 @@ export default function HomePage() {
 			{/* <Image alt="waves" src="/Waves.png" width={100} height={100}/> */}
 
 			<UserSelector setUserType={setUserType} userType={userType} />
-			{userType == "hr" ? <FormGenerator /> : <>User</>}
+			{userType == "hr" ? <FormGenerator /> : <><UserForm /></>}
 		</main>
 	);
 }
