@@ -1,49 +1,44 @@
 import axios from "axios";
 import { API_PATHS } from "./API_PATH";
+import { type ImageTextPair } from "~/types/requests";
 
-export const analyseVoice = async (audioBlob: Blob) => {
+export const analyseVoice = async (audioFile: Blob) => {
 	try {
 		const formData = new FormData();
-		formData.append("file", audioBlob, "recording.wav"); // Key name should match the server expectation
+		formData.append("audio_file", audioFile); // Ensure the key matches the backend expectation
 
-		// Send the FormData with `multipart/form-data` headers
-		await axios.post(API_PATHS.voice, formData, {
+		const response = await axios.post(API_PATHS.voice, formData, {
 			headers: {
 				"Content-Type": "multipart/form-data",
+				Accept: "application/json",
 			},
 		});
-
-		console.log("Audio file sent successfully!");
 	} catch (error) {
-		console.error("Failed to send audio file:", error);
-		throw error; // Optional: re-throw to handle errors in the calling code
+		console.error("Failed to analyze voice:", error);
+		throw error;
 	}
 };
 
 export const analyseText = async (text: string) => {
 	try {
 		await axios.post(API_PATHS.text, { text: text });
-
-		console.log("Text sent successfully!");
 	} catch (error) {
 		console.error("Failed to send text prompt:", error);
 		throw error; // Optional: re-throw to handle errors in the calling code
 	}
 };
-export const analyseImage = async (imageBlob: Blob, inputData: string) => {
+
+export const analyseImage = async ({ text, image }: ImageTextPair) => {
 	try {
 		const formData = new FormData();
-		formData.append("input_data", inputData); // Adding the input data string
-		formData.append("file", imageBlob, "image.jpg"); // Adding the image file as binary
-
+		formData.append("input_data", text); // Adding the input data string
+		formData.append("file", image, "image.jpg"); // Adding the image file as binary
 		// Send the FormData with `multipart/form-data` headers
-		await axios.post("YOUR_ANALYSE_IMAGE_ENDPOINT", formData, {
+		await axios.post(API_PATHS.image, formData, {
 			headers: {
 				"Content-Type": "multipart/form-data",
 			},
 		});
-
-		console.log("Image analysis request sent successfully!");
 	} catch (error) {
 		console.error("Failed to send image analysis request:", error);
 		throw error; // Optional: re-throw to handle errors in the calling code

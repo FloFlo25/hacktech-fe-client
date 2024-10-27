@@ -21,8 +21,14 @@ const RecordingButton = ({ handleSetAudioFile }: Props) => {
 			};
 
 			mediaRecorderRef.current.onstop = () => {
-				const audioBlob = new Blob(audioChunks.current, { type: "audio/wav" });
+				const audioBlob = new Blob(audioChunks.current, { type: "audio/mp3" });
 				setAudioURL(URL.createObjectURL(audioBlob));
+
+				const file = new File(audioChunks.current, "audio.wav", {
+					type: "audio/wav",
+					lastModified: Date.now(),
+				});
+				handleSetAudioFile(file);
 				audioChunks.current = []; // Clear audio chunks for the next recording
 			};
 
@@ -37,8 +43,6 @@ const RecordingButton = ({ handleSetAudioFile }: Props) => {
 		if (mediaRecorderRef.current) mediaRecorderRef.current.stop();
 		setIsRecording(false);
 	};
-
-	console.log(audioURL);
 
 	return (
 		<div className="flex flex-col items-center justify-center bg-gray-100 p-4">

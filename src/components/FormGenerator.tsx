@@ -1,4 +1,5 @@
-import Image from "next/image";
+import { useState } from "react";
+import { analyseImage, analyseText, analyseVoice } from "~/api/form";
 import GenerateFormIcon from "./icons/GenerateFormIcon";
 import ImageIcon from "./icons/ImageIcon";
 import TextIcon from "./icons/TextIcon";
@@ -8,12 +9,13 @@ import RecordingButton from "./RecordingButton";
 import { Button } from "./ui/button";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "./ui/tabs";
 import { Textarea } from "./ui/textarea";
-import { analyseImage, analyseText, analyseVoice } from "~/api/form";
-import { useState } from "react";
 
 const FormGenerator = () => {
 	const [audioFile, setAudioFile] = useState<Blob | null>(null);
-	const [imageTextPair, setImageTextPair] = useState();
+	const [imageTextPair, setImageTextPair] = useState<{
+		text: string;
+		image: Blob;
+	}>();
 	const [fileType, setFileType] = useState<string>("text");
 	const [textPrompt, setTextPrompt] = useState("");
 
@@ -21,22 +23,26 @@ const FormGenerator = () => {
 		setAudioFile(audioBlob);
 	};
 
-	// const handleSetImageFileWithPrompt = () => {};
+	const handleSetImageFileWithPrompt = (imageTextPair: {
+		text: string;
+		image: Blob;
+	}) => setImageTextPair(imageTextPair);
 
+	//TODO: Add logic for keywords
 	const generateSurvey = async () => {
 		if (fileType === "text") {
 			const response = await analyseText(textPrompt);
-			console.log(response);
 			return;
 		}
 		if (fileType === "voice" && audioFile) {
 			const response = await analyseVoice(audioFile);
-			console.log(response);
 			return;
 		}
 
-		// const response = await analyseImage(textPrompt);
-		// console.log(response);
+		if (imageTextPair) {
+			const response = await analyseImage(imageTextPair);
+			return;
+		}
 		return;
 	};
 
@@ -93,7 +99,9 @@ const FormGenerator = () => {
 						<RecordingButton handleSetAudioFile={handleSetAudioFile} />
 					</TabsContent>
 					<TabsContent value="image">
-						<ImageForm />
+						<ImageForm
+							handleSetImageFileWithPrompt={handleSetImageFileWithPrompt}
+						/>
 					</TabsContent>
 				</Tabs>
 				<Button className="w-fit" onClick={generateSurvey}>
