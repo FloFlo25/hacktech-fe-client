@@ -1,135 +1,114 @@
 import React from "react";
+import { Textarea } from "~/components/ui/textarea";
 import { Slider } from "~/components/ui/slider";
+import { Input } from "~/components/ui/input";
 import { RadioGroup, RadioGroupItem } from "~/components/ui/radio-group";
 import { Label } from "~/components/ui/label";
 import { Checkbox } from "~/components/ui/checkbox";
-import { Input } from "~/components/ui/input";
+import { Button } from "~/components/ui/button";
 
-// Types for our survey items
-type BaseQuestionProps = {
-	questionNumber: string;
-	questionText: string;
+// Types based on the JSON structure
+type Field = {
+	name: string;
+	label: string;
+	type: "slider" | "multiple" | "text" | "checkbox";
+	required: boolean;
+	options?: string[] | null;
+	multiline?: boolean | null;
+	min?: number | null;
+	max?: number | null;
 };
 
-type SliderQuestion = BaseQuestionProps & {
-	type: "slider";
-	defaultValue: number;
-	maxValue: number;
-	stepValue: number;
+type SurveyData = {
+	title: string;
+	fields: Field[];
 };
 
-type TextQuestion = BaseQuestionProps & {
-	type: "text";
-	placeholder: string;
-};
-
-type RadioQuestion = BaseQuestionProps & {
-	type: "radio";
-	options: Array<{ value: string; label: string }>;
-};
-
-type CheckboxQuestion = BaseQuestionProps & {
-	type: "checkbox";
-	options: Array<{ value: string; label: string }>;
-};
-
-type QuestionType =
-	| SliderQuestion
-	| TextQuestion
-	| RadioQuestion
-	| CheckboxQuestion;
-
-// Individual Question Components
-const SliderQuestionComponent = ({
-	questionNumber,
-	questionText,
-	defaultValue,
-	maxValue,
-	stepValue,
-}: SliderQuestion) => {
-	const [value, setValue] = React.useState([defaultValue]);
+// Individual Field Components
+const SliderField = ({ field, index }: { field: Field; index: number }) => {
+	const [value, setValue] = React.useState([field.min || 1]);
 
 	return (
 		<div className="px-2">
 			<Slider
 				defaultValue={value}
-				max={maxValue}
-				step={stepValue}
+				min={field.min || 1}
+				max={field.max || 5}
+				step={1}
 				onValueChange={setValue}
 				className="w-full"
-				aria-label={`Question ${questionNumber} slider`}
+				aria-label={field.label}
 			/>
 		</div>
 	);
 };
 
-const TextQuestionComponent = ({
-	questionNumber,
-	questionText,
-	placeholder,
-}: TextQuestion) => {
+const TextField = ({ field, index }: { field: Field; index: number }) => {
+	if (field.multiline) {
+		return (
+			<Textarea
+				placeholder="Enter your answer..."
+				className="w-full"
+				aria-label={field.label}
+				required={field.required}
+			/>
+		);
+	}
+
 	return (
 		<Input
-			placeholder={placeholder}
+			placeholder="Enter your answer..."
 			className="w-full"
-			aria-label={`Question ${questionNumber} input`}
+			aria-label={field.label}
+			required={field.required}
 		/>
 	);
 };
 
-const RadioQuestionComponent = ({
-	questionNumber,
-	questionText,
-	options,
-}: RadioQuestion) => {
+const MultipleChoiceField = ({
+	field,
+	index,
+}: {
+	field: Field;
+	index: number;
+}) => {
 	return (
 		<RadioGroup className="flex flex-col space-y-2">
-			{options.map((option) => (
-				<div key={option.value} className="flex items-center space-x-2">
+			{field.options?.map((option) => (
+				<div key={option} className="flex items-center space-x-2">
 					<RadioGroupItem
-						value={option.value}
-						id={`q${questionNumber}-${option.value}`}
+						value={option}
+						id={`q${index}-${option}`}
+						required={field.required}
 					/>
-					<Label htmlFor={`q${questionNumber}-${option.value}`}>
-						{option.label}
-					</Label>
+					<Label htmlFor={`q${index}-${option}`}>{option}</Label>
 				</div>
 			))}
 		</RadioGroup>
 	);
 };
 
-const CheckboxQuestionComponent = ({
-	questionNumber,
-	questionText,
-	options,
-}: CheckboxQuestion) => {
+const CheckboxField = ({ field, index }: { field: Field; index: number }) => {
 	return (
-		<div className="flex flex-col space-y-2">
-			{options.map((option) => (
-				<div key={option.value} className="flex items-center space-x-2">
-					<Checkbox id={`q${questionNumber}-${option.value}`} />
-					<Label htmlFor={`q${questionNumber}-${option.value}`}>
-						{option.label}
-					</Label>
-				</div>
-			))}
+		<div className="flex items-center space-x-2">
+			<Checkbox id={`q${index}-checkbox`} required={field.required} />
+			<Label htmlFor={`q${index}-checkbox`}>Yes</Label>
 		</div>
 	);
 };
 
-// Question Card Component
-const QuestionCard = ({ question }: { question: QuestionType }) => {
-	const renderQuestion = () => {
-		switch (question.type) {
+// Field Card Component
+const FieldCard = ({ field, index }: { field: Field; index: number }) => {
+	const renderField = () => {
+		switch (field.type) {
 			case "slider":
-				return <SliderQuestionComponent {...question} />;
+				return <SliderField field={field} index={index} />;
 			case "text":
-				return <TextQuestionComponent {...question} />;
-			case "radio":
-				return <RadioQuestionComponent {...question} />;
+				return <TextField field={field} index={index} />;
+			case "multiple":
+				return <MultipleChoiceField field={field} index={index} />;
 			case "checkbox":
-				return <CheckboxQuestionComponent {...question} />;
+				return <CheckboxField field={field} index={index} />;
 			default:
 				return null;
 		}
@@ -139,27 +118,31 @@ const QuestionCard = ({ question }: { question: QuestionType }) => {
 		<div className="w-full rounded-3xl bg-white p-6 shadow-lg">
 			<div className="mb-6">
 				<h2 className="mb-2 text-xl font-bold text-[#8B0000] sm:text-2xl">
-					Question {question.questionNumber}
+					Question {index + 1}
 				</h2>
-				<p className="mb-4 text-sm text-gray-800 sm:text-base">
-					{question.questionText}
-				</p>
-				{renderQuestion()}
+				<p className="mb-4 text-sm text-gray-800 sm:text-base">{field.label}</p>
+				{field.required && (
+					<span className="mb-2 block text-sm text-red-500">* Required</span>
+				)}
+				{renderField()}
 			</div>
 		</div>
 	);
 };
 
 // Main Survey Component
-const SurveyCard = ({
-	title = "Employee Satisfaction Survey",
-	questions,
-}: {
-	title?: string;
-	questions: QuestionType[];
-}) => {
+const SurveyCard = ({ surveyData }: { surveyData: SurveyData }) => {
+	const handleSubmit = (e: React.FormEvent) => {
+		e.preventDefault();
+		// Handle form submission
+		console.log("Form submitted");
+	};
+
 	return (
-		<div className="relative min-h-[852px] w-full max-w-[600px] overflow-hidden bg-white p-4">
+		<form
+			onSubmit={handleSubmit}
+			className="relative min-h-[852px] w-full max-w-[600px] overflow-hidden bg-white p-4"
+		>
 			{/* Background pattern */}
 			<div className="absolute bottom-0 right-0 h-2/3 w-full opacity-20">
 				<div className="absolute bottom-0 right-0 h-96 w-96 translate-x-1/4 translate-y-1/4 transform rounded-full bg-gradient-to-br from-red-300 to-orange-200 blur-xl" />
@@ -169,16 +152,22 @@ const SurveyCard = ({
 			{/* Content container */}
 			<div className="relative z-10">
 				<h1 className="mb-8 text-2xl font-bold text-black sm:text-3xl">
-					{title}
+					{surveyData.title}
 				</h1>
 
 				<div className="space-y-6">
-					{questions.map((question) => (
-						<QuestionCard key={question.questionNumber} question={question} />
+					{surveyData.fields.map((field, index) => (
+						<FieldCard key={field.name} field={field} index={index} />
 					))}
 				</div>
+
+				<div className="mt-8">
+					<Button type="submit" className="w-full">
+						Submit Survey
+					</Button>
+				</div>
 			</div>
-		</div>
+		</form>
 	);
 };
 

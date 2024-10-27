@@ -8,7 +8,7 @@ import UserSelector from "~/components/UserSelector";
 import { type UserType } from "~/types/user";
 import SurveyCard from "~/components/SurveyCard";
 import ThankYouCard from "~/components/ThankYouCard";
-import { sampleQuestions, surveys } from "~/lib/utils";
+import { sampleQuestions, surveyJson, surveys } from "~/lib/utils";
 import LoadingComponent from "~/components/LoadingComponent";
 import LoadingPage from "~/components/LoadingPage";
 
@@ -21,7 +21,7 @@ export default function HomePage() {
 				<FormGenerator />
 			) : (
 				<>
-					<UserForm />
+					<SurveyCard surveyData={surveyJson.survey[0]} />
 				</>
 			)}
 		</>

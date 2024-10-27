@@ -9,7 +9,7 @@ export const API_PATHS = {
 	text: API_BASE_PATH + "/api/analyze-text",
 	survey: API_BASE_PATH + "/api/survey",
     
-
+	regenerate: API_BASE_PATH + "/api/regenerate-section",
 	// Super simplified user/form endpoints
 	users: (userId, formId) => ({
 		base: path("users"),
