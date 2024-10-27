@@ -2,6 +2,7 @@ import GenerateFormIcon from "./icons/GenerateFormIcon";
 import ImageIcon from "./icons/ImageIcon";
 import TextIcon from "./icons/TextIcon";
 import VoiceIcon from "./icons/VoiceIcon";
+import ImageForm from "./ImageForm";
 import RecordingButton from "./RecordingButton";
 import { Button } from "./ui/button";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "./ui/tabs";
@@ -52,9 +53,11 @@ const FormGenerator = () => {
 						</div>
 					</TabsContent>
 					<TabsContent value="voice">
-						<RecordingButton recording />
+						<RecordingButton />
 					</TabsContent>
-					<TabsContent value="image">image here</TabsContent>
+					<TabsContent value="image">
+						<ImageForm />
+					</TabsContent>
 				</Tabs>
 				<Button className="w-fit">
 					<GenerateFormIcon className="!h-[20px] !w-[20px]" />

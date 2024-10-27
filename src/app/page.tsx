@@ -1,9 +1,16 @@
+"use client";
+
+import { useState } from "react";
 import FormGenerator from "~/components/FormGenerator";
+import UserSelector from "~/components/UserSelector";
+import { type UserType } from "~/types/user";
 
 export default function HomePage() {
+	const [userType, setUserType] = useState<UserType>("hr");
 	return (
 		<main className="flex min-h-screen flex-col items-center justify-center bg-primary-main">
-			<FormGenerator />
+			<UserSelector setUserType={setUserType} userType={userType} />
+			{userType == "hr" ? <FormGenerator /> : <>User</>}
 		</main>
 	);
 }
