@@ -3,9 +3,14 @@
 import Image from "next/image";
 import { useState } from "react";
 import FormGenerator from "~/components/FormGenerator";
-import UserForm from "~/components/UserForm";
+import UserForm, { SurveyList } from "~/components/UserForm";
 import UserSelector from "~/components/UserSelector";
 import { type UserType } from "~/types/user";
+import SurveyCard from "~/components/SurveyCard";
+import ThankYouCard from "~/components/ThankYouCard";
+import { sampleQuestions, surveys } from "~/lib/utils";
+import LoadingComponent from "~/components/LoadingComponent";
+import LoadingPage from "~/components/LoadingPage";
 
 export default function HomePage() {
 	const [userType, setUserType] = useState<UserType>("hr");
@@ -22,3 +27,14 @@ export default function HomePage() {
 		</>
 	);
 }
+
+// Examples:
+/*<SurveyList
+  surveys={surveys}
+  onSurveyClick={(id) => {
+    // Handle navigation or other actions
+    console.log(`Navigate to survey: ${id}`);
+  }}
+/>*/
+// <LoadingPage />
+// ThankYouCard
