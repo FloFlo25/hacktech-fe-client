@@ -1,3 +1,4 @@
+import Image from "next/image";
 import GenerateFormIcon from "./icons/GenerateFormIcon";
 import ImageIcon from "./icons/ImageIcon";
 import TextIcon from "./icons/TextIcon";
@@ -11,7 +12,7 @@ import { Textarea } from "./ui/textarea";
 const FormGenerator = () => {
 	return (
 		<div className="w-fit rounded-[24px] bg-primary-secondary p-8">
-			<div className="flex flex-col items-center gap-8 rounded-[12px] bg-white p-8">
+			<div className="flex min-h-[800px] flex-col items-center gap-8 rounded-[12px] bg-white p-8">
 				<span className="text-[64px] font-bold text-primary-dark">
 					Talk-a-Bot: AI-gen Surveys
 				</span>
