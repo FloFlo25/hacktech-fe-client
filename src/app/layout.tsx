@@ -14,7 +14,20 @@ export default function RootLayout({
 }: Readonly<{ children: React.ReactNode }>) {
 	return (
 		<html lang="en" className={`${GeistSans.variable}`}>
-			<body className="h-screen w-screen">{children}</body>
+			<body className="h-screen w-screen">
+				<main
+					style={{
+						backgroundImage: `url("/Waves.png")`,
+						backgroundRepeat: "no-repeat",
+						backgroundSize: "cover",
+						backgroundPositionX: "-65px",
+						backgroundAttachment: "fixed",
+					}}
+					className="flex min-h-screen flex-col items-center justify-center bg-primary-main"
+				>
+					{children}
+				</main>
+			</body>
 		</html>
 	);
 }

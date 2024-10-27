@@ -10,6 +10,7 @@ import { Button } from "./ui/button";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "./ui/tabs";
 import { Textarea } from "./ui/textarea";
 import LoadingComponent from "./LoadingComponent";
+import { useRouter } from "next/navigation";
 
 const FormGenerator = () => {
 	const [audioFile, setAudioFile] = useState<Blob | null>(null);
@@ -20,6 +21,7 @@ const FormGenerator = () => {
 	const [fileType, setFileType] = useState<string>("text");
 	const [textPrompt, setTextPrompt] = useState("");
 	const [isLoading, setIsLoading] = useState(false);
+	const router = useRouter();
 
 	const handleSetAudioFile = (audioBlob: Blob) => {
 		setAudioFile(audioBlob);
@@ -34,20 +36,27 @@ const FormGenerator = () => {
 	const generateSurvey = async () => {
 		setIsLoading(true);
 		try {
+			let response;
 			if (fileType === "text") {
-				const response = await analyseText(textPrompt);
+				response = await analyseText(textPrompt);
 				console.log(response);
 			} else if (fileType === "voice" && audioFile) {
-				const response = await analyseVoice(audioFile);
+				response = await analyseVoice(audioFile);
 				console.log(response);
 			} else if (imageTextPair) {
-				const response = await analyseImage(imageTextPair);
+				response = await analyseImage(imageTextPair);
 				console.log(response);
 			}
+			if (response)
+				localStorage.setItem(
+					"extractedKeywords",
+					JSON.stringify(response.data.extractedKeywords),
+				);
 		} catch (error) {
 			console.error("Error generating survey:", error);
 		} finally {
-			setIsLoading(false); // Set loading to false when the request completes
+			setIsLoading(false);
+			router.push("generate-survey"); // Set loading to false when the request completes
 		}
 	};
 

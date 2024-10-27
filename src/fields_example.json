@@ -1,97 +1,171 @@
 {
 	"survey": [
-		{
-			"title": "Diversity and Inclusion Feedback Survey",
-			"fields": [
-				{
-					"name": "overallPerception",
-					"label": "How would you rate the overall diversity and inclusion efforts at our organization?",
-					"type": "slider",
-					"required": true,
-					"min": 1,
-					"max": 10
-				},
-				{
-					"name": "inclusiveEnvironment",
-					"label": "Do you feel that the work environment is inclusive for all employees?",
-					"type": "multiple",
-					"required": true,
-					"options": [
-						"Strongly Agree",
-						"Agree",
-						"Neutral",
-						"Disagree",
-						"Strongly Disagree"
-					]
-				},
-				{
-					"name": "diversityAwareness",
-					"label": "How would you rate the organization's awareness and understanding of diversity issues?",
-					"type": "icon",
-					"required": true,
-					"icon": "faStar"
-				},
-				{
-					"name": "trainingEffectiveness",
-					"label": "How effective are the diversity and inclusion training programs?",
-					"type": "multiple",
-					"required": true,
-					"options": [
-						"Very Effective",
-						"Effective",
-						"Somewhat Effective",
-						"Not Effective",
-						"Not Applicable"
-					]
-				},
-				{
-					"name": "representation",
-					"label": "Do you feel there is adequate representation of diverse groups within the organization?",
-					"type": "checkbox",
-					"required": true
-				},
-				{
-					"name": "supportForDiverseGroups",
-					"label": "How well does the organization support diverse groups?",
-					"type": "slider",
-					"required": true,
-					"min": 1,
-					"max": 5
-				},
-				{
-					"name": "leadershipCommitment",
-					"label": "How committed do you feel the leadership is to diversity and inclusion?",
-					"type": "multiple",
-					"required": true,
-					"options": [
-						"Very Committed",
-						"Committed",
-						"Somewhat Committed",
-						"Not Committed"
-					]
-				},
-				{
-					"name": "barriersToInclusion",
-					"label": "What barriers to inclusion have you observed or experienced?",
-					"type": "text",
-					"required": false,
-					"multiline": true
-				},
-				{
-					"name": "improvementSuggestions",
-					"label": "Do you have any suggestions for improving diversity and inclusion in the workplace?",
-					"type": "text",
-					"required": false,
-					"multiline": true
-				},
-				{
-					"name": "additionalComments",
-					"label": "Any other comments or feedback you would like to share?",
-					"type": "text",
-					"required": false,
-					"multiline": true
-				}
-			]
-		}
+	  {
+		"title": "Placeholder Text Feedback",
+		"fields": [
+		  {
+			"name": "awarenessOfPlaceholderText",
+			"label": "Are you familiar with the use of placeholder text (e.g., Lorem Ipsum)?",
+			"type": "multiple",
+			"required": true,
+			"options": [
+			  "Yes",
+			  "No",
+			  "Somewhat"
+			],
+			"icon": null,
+			"multiline": null,
+			"min": null,
+			"max": null
+		  },
+		  {
+			"name": "usefulnessOfPlaceholderText",
+			"label": "How useful do you find placeholder text in design and layout work?",
+			"type": "slider",
+			"required": true,
+			"options": null,
+			"icon": null,
+			"multiline": null,
+			"min": 1,
+			"max": 5
+		  },
+		  {
+			"name": "frequencyOfUse",
+			"label": "How often do you use placeholder text in your projects?",
+			"type": "multiple",
+			"required": true,
+			"options": [
+			  "Always",
+			  "Often",
+			  "Sometimes",
+			  "Rarely",
+			  "Never"
+			],
+			"icon": null,
+			"multiline": null,
+			"min": null,
+			"max": null
+		  },
+		  {
+			"name": "preferredTypeOfPlaceholder",
+			"label": "What type of placeholder text do you prefer to use?",
+			"type": "multiple",
+			"required": true,
+			"options": [
+			  "Lorem Ipsum",
+			  "Random Text",
+			  "Custom Text",
+			  "Other"
+			],
+			"icon": null,
+			"multiline": null,
+			"min": null,
+			"max": null
+		  },
+		  {
+			"name": "impactOnDesignProcess",
+			"label": "How does placeholder text impact your design process?",
+			"type": "text",
+			"required": false,
+			"options": null,
+			"icon": null,
+			"multiline": true,
+			"min": null,
+			"max": null
+		  },
+		  {
+			"name": "challengesWithPlaceholderText",
+			"label": "What challenges do you face when using placeholder text?",
+			"type": "text",
+			"required": false,
+			"options": null,
+			"icon": null,
+			"multiline": true,
+			"min": null,
+			"max": null
+		  },
+		  {
+			"name": "clientFeedback",
+			"label": "Have you received any feedback from clients regarding the use of placeholder text?",
+			"type": "multiple",
+			"required": false,
+			"options": [
+			  "Yes, Positive",
+			  "Yes, Negative",
+			  "No Feedback"
+			],
+			"icon": null,
+			"multiline": null,
+			"min": null,
+			"max": null
+		  },
+		  {
+			"name": "improvementsForPlaceholderText",
+			"label": "What improvements would you suggest for the use of placeholder text?",
+			"type": "text",
+			"required": false,
+			"options": null,
+			"icon": null,
+			"multiline": true,
+			"min": null,
+			"max": null
+		  },
+		  {
+			"name": "alternativeMethods",
+			"label": "Do you use any alternative methods to placeholder text for layout purposes?",
+			"type": "checkbox",
+			"required": true,
+			"options": null,
+			"icon": null,
+			"multiline": null,
+			"min": null,
+			"max": null
+		  },
+		  {
+			"name": "importanceInPrototyping",
+			"label": "How important is placeholder text in the prototyping phase?",
+			"type": "slider",
+			"required": true,
+			"options": null,
+			"icon": null,
+			"multiline": null,
+			"min": 1,
+			"max": 5
+		  },
+		  {
+			"name": "examplesOfUse",
+			"label": "Can you provide examples of when placeholder text was particularly useful?",
+			"type": "text",
+			"required": false,
+			"options": null,
+			"icon": null,
+			"multiline": true,
+			"min": null,
+			"max": null
+		  },
+		  {
+			"name": "futureUse",
+			"label": "Do you plan to continue using placeholder text in future projects?",
+			"type": "checkbox",
+			"required": true,
+			"options": null,
+			"icon": null,
+			"multiline": null,
+			"min": null,
+			"max": null
+		  },
+		  {
+			"name": "additionalComments",
+			"label": "Any additional comments or feedback on placeholder text?",
+			"type": "text",
+			"required": false,
+			"options": null,
+			"icon": null,
+			"multiline": true,
+			"min": null,
+			"max": null
+		  }
+		]
+	  }
 	]
-}
+  }

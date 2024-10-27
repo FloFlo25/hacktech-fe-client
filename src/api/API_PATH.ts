@@ -5,4 +5,5 @@ export const API_PATHS = {
 	image: API_BASE_PATH + "/api/analyze-image",
 	text: API_BASE_PATH + "/api/analyze-text",
 	survey: API_BASE_PATH + "/api/survey",
+    
 };
