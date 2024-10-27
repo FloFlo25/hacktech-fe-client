@@ -3,7 +3,9 @@ import { Button } from "./ui/button";
 import RecordIcon from "./icons/RecordIcon";
 import StopRecordIcon from "./icons/StopRecordIcon";
 
-const RecordingButton = () => {
+type Props = { handleSetAudioFile: (audioBlob: Blob) => void };
+
+const RecordingButton = ({ handleSetAudioFile }: Props) => {
 	const [isRecording, setIsRecording] = useState(false);
 	const [audioURL, setAudioURL] = useState("");
 	const mediaRecorderRef = useRef<MediaRecorder | null>(null);

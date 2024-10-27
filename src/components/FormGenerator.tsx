@@ -8,15 +8,49 @@ import RecordingButton from "./RecordingButton";
 import { Button } from "./ui/button";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "./ui/tabs";
 import { Textarea } from "./ui/textarea";
+import { analyseImage, analyseText, analyseVoice } from "~/api/form";
+import { useState } from "react";
 
 const FormGenerator = () => {
+	const [audioFile, setAudioFile] = useState<Blob | null>(null);
+	const [imageTextPair, setImageTextPair] = useState();
+	const [fileType, setFileType] = useState<string>("text");
+	const [textPrompt, setTextPrompt] = useState("");
+
+	const handleSetAudioFile = (audioBlob: Blob) => {
+		setAudioFile(audioBlob);
+	};
+
+	// const handleSetImageFileWithPrompt = () => {};
+
+	const generateSurvey = async () => {
+		if (fileType === "text") {
+			const response = await analyseText(textPrompt);
+			console.log(response);
+			return;
+		}
+		if (fileType === "voice" && audioFile) {
+			const response = await analyseVoice(audioFile);
+			console.log(response);
+			return;
+		}
+
+		// const response = await analyseImage(textPrompt);
+		// console.log(response);
+		return;
+	};
+
 	return (
 		<div className="w-fit rounded-[24px] bg-primary-secondary p-8">
 			<div className="flex min-h-[800px] flex-col items-center gap-8 rounded-[12px] bg-white p-8">
-				<span className="text-[64px] font-bold text-primary-dark">
+				<span className="text-primary-dark text-[64px] font-bold">
 					Talk-a-Bot: AI-gen Surveys
 				</span>
-				<Tabs defaultValue="text" className="w-full">
+				<Tabs
+					defaultValue="text"
+					onValueChange={(e) => setFileType(e)}
+					className="w-full"
+				>
 					<TabsList className="h-14 w-full bg-primary-secondary p-4">
 						<TabsTrigger
 							className="flex w-full justify-center gap-2 p-2 align-middle data-[state=active]:bg-primary-main"
@@ -47,6 +81,8 @@ const FormGenerator = () => {
 							</span>
 							<Textarea
 								rows={12}
+								value={textPrompt}
+								onChange={(e) => setTextPrompt(e.currentTarget.value)}
 								placeholder="Type your prompt here."
 								className="resize-none"
 								id="prompt"
@@ -54,13 +90,13 @@ const FormGenerator = () => {
 						</div>
 					</TabsContent>
 					<TabsContent value="voice">
-						<RecordingButton />
+						<RecordingButton handleSetAudioFile={handleSetAudioFile} />
 					</TabsContent>
 					<TabsContent value="image">
 						<ImageForm />
 					</TabsContent>
 				</Tabs>
-				<Button className="w-fit">
+				<Button className="w-fit" onClick={generateSurvey}>
 					<GenerateFormIcon className="!h-[20px] !w-[20px]" />
 					<span>Generate</span>
 				</Button>
